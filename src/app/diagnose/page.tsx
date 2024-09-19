@@ -25,6 +25,14 @@ interface FormData {
   additionalSymptoms: string[]; // Change this from never[] to string[]
 }
 
+// Define an interface for your prediction data
+interface Prediction {
+  predicted_disease: string;
+  severity: string;
+  description: string;
+  precautions: string[];
+}
+
 export default function DiagnosePage() {
   const [currentStep, setCurrentStep] = useState(0)
   const [formData, setFormData] = useState<FormData>({
@@ -34,7 +42,7 @@ export default function DiagnosePage() {
     additionalSymptoms: [],
   })
   const [isLoading, setIsLoading] = useState(false)
-  const [prediction, setPrediction] = useState(null)
+  const [prediction, setPrediction] = useState<Prediction | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
@@ -140,7 +148,7 @@ export default function DiagnosePage() {
       case 4:
         return (
           <div className="text-center">
-            {prediction ? (
+            {prediction && (
               <>
                 <h2 className="text-3xl font-bold text-blue-600 mb-4">Prediction: {prediction.predicted_disease}</h2>
                 <div className="mb-6">
@@ -159,8 +167,6 @@ export default function DiagnosePage() {
                   </ul>
                 </div>
               </>
-            ) : (
-              <p>No prediction available</p>
             )}
           </div>
         )
