@@ -17,9 +17,17 @@ const steps = [
   { id: 'result', title: 'Your Results' },
 ]
 
+// Define an interface for your form data
+interface FormData {
+  name: string;
+  symptom: string;
+  duration: number;
+  additionalSymptoms: string[]; // Change this from never[] to string[]
+}
+
 export default function DiagnosePage() {
   const [currentStep, setCurrentStep] = useState(0)
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     symptom: '',
     duration: 1,
